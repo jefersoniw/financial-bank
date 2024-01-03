@@ -1,0 +1,47 @@
+-> user
+  -> id
+  -> name
+  -> cpfcnpj
+  -> email
+  -> password
+
+-> tipo_cliente
+  -> id
+  -> desc_tipo
+
+-> tipo_conta
+  -> id
+  -> desc_tipo
+
+-> situacao_conta 
+  -> id 
+  -> desc_situacao
+
+-> conta
+  -> id
+  -> user_id
+  -> tipo_cliente_id
+  -> tipo_conta_id
+  -> situacao_conta_id
+  -> agencia
+  -> num_conta
+  -> saldo_disponivel
+  -> dt_abertura
+  -> dt_encerramento
+
+-> tipo_transacao
+  -> id
+  -> desc_transacao
+
+-> transacao
+  -> id
+  -> tipo_transacao
+  -> valor_transacao
+  -> conta_id
+
+-> historico
+  -> id 
+  -> user_id
+  -> transacao_id 
+  -> conta_id
+  -> saldo
