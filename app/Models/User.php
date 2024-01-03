@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -19,8 +21,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'cpfcnpj',
         'email',
         'password',
+        'dt_encerramento'
     ];
 
     /**
@@ -41,4 +45,62 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function createuser($request)
+    {
+        try {
+            $user = new self;
+            $user->name = $request['name'];
+            $user->cpfcnpj = $request['cpfcnpj'];
+            $user->email = $request['email'];
+            $user->password = Hash::make($request['password']);
+            if (!$user->save()) {
+                throw new Exception("erro ao salvar usuario!");
+            }
+
+            return [
+                'error' => false,
+                'msg' => 'User cadastrado com sucesso!',
+                $user
+            ];
+        } catch (Exception $e) {
+
+            return [
+                'error' => true,
+                'erro_msg' => $e->getMessage(),
+                'erro_line' => $e->getLine(),
+                'erro_file' => $e->getFile()
+            ];
+        }
+    }
+
+    public function editUser(User $user, $request)
+    {
+        try {
+            if (!empty($request['name'])) {
+                $user->name = $request['name'];
+            }
+            if (!empty($request['email'])) {
+                $user->email = $request['email'];
+            }
+            if (!empty($request['dt_encerramento'])) {
+                $user->dt_encerramento = $request['dt_encerramento'];
+            }
+            if (!$user->save()) {
+                throw new Exception("erro ao atualizar usuario!");
+            }
+
+            return [
+                'error' => false,
+                'msg' => 'Usuario atualizado com sucesso!',
+                $user
+            ];
+        } catch (Exception $e) {
+            return [
+                'error' => true,
+                'erro_msg' => $e->getMessage(),
+                'erro_line' => $e->getLine(),
+            ];
+        }
+    }
 }
