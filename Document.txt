@@ -1,11 +1,12 @@
--> user
+-> user -> FEITO
   -> id
   -> name
   -> cpfcnpj
   -> email
   -> password
+  -> dt_encerramento
 
--> tipo_cliente
+-> tipo_cliente -> FAZENDO
   -> id
   -> desc_tipo
 
