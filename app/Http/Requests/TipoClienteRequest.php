@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class TipoClienteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,7 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|required|min:3',
-            'cpfcnpj' => 'required|numeric|min:11',
-            'tipo_cliente' => 'required',
-            'email' => 'string|required|email',
-            'password' => 'string|required',
-            'rep_password' => 'string|required|same:password'
+            'desc_tipo' => 'required|string'
         ];
     }
 }

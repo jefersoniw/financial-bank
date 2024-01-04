@@ -1,27 +1,27 @@
+-> tipo_cliente -> FEITO
+  -> id
+  -> desc_tipo
+
 -> user -> FEITO
   -> id
   -> name
   -> cpfcnpj
+  -> tipo_cliente_id
   -> email
   -> password
   -> dt_encerramento
 
--> tipo_cliente -> FAZENDO
+-> tipo_conta -> FEITO
   -> id
   -> desc_tipo
 
--> tipo_conta
-  -> id
-  -> desc_tipo
-
--> situacao_conta 
+-> situacao_conta -> FAZENDO
   -> id 
-  -> desc_situacao
+  -> desc_situacao ()
 
 -> conta
   -> id
   -> user_id
-  -> tipo_cliente_id
   -> tipo_conta_id
   -> situacao_conta_id
   -> agencia
