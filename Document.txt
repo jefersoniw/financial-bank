@@ -11,11 +11,11 @@
   -> password
   -> dt_encerramento
 
--> tipo_conta -> FAZENDO
+-> tipo_conta -> FEITO
   -> id
   -> desc_tipo
 
--> situacao_conta 
+-> situacao_conta -> FAZENDO
   -> id 
   -> desc_situacao ()
 

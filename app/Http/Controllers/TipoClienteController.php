@@ -26,7 +26,7 @@ class TipoClienteController extends Controller
     {
         $tipoCliente = $this->tipoCliente->createTipoCliente($request->validated());
 
-        if (!empty($user['error'])) {
+        if (!empty($tipoCliente['error'])) {
 
             return response()->json([
                 $tipoCliente
@@ -35,6 +35,15 @@ class TipoClienteController extends Controller
 
         return \response()->json([
             $tipoCliente
+        ], 200);
+    }
+
+    public function delete(TipoCliente $tipoCliente)
+    {
+        $tipoCliente->delete();
+
+        return \response()->json([
+            'Tipo cliente excluído com sucesso!'
         ], 200);
     }
 }
