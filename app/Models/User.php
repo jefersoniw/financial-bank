@@ -22,6 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'cpfcnpj',
+        'tipo_cliente_id',
         'email',
         'password',
         'dt_encerramento'
@@ -52,6 +53,7 @@ class User extends Authenticatable
             $user = new self;
             $user->name = $request['name'];
             $user->cpfcnpj = $request['cpfcnpj'];
+            $user->tipo_cliente_id = $request['tipo_cliente'];
             $user->email = $request['email'];
             $user->password = Hash::make($request['password']);
             if (!$user->save()) {
