@@ -15,15 +15,10 @@
   -> id
   -> desc_tipo
 
--> situacao_conta -> FAZENDO
-  -> id 
-  -> desc_situacao ()
-
--> conta
+-> conta -> FAZENDO
   -> id
   -> user_id
   -> tipo_conta_id
-  -> situacao_conta_id
   -> agencia
   -> num_conta
   -> saldo_disponivel
