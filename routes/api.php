@@ -52,3 +52,6 @@ Route::group(['prefix' => 'contas'], function () {
     route::post('/', [ContaController::class, 'store']);
     route::put('/{conta}/encerrar', [ContaController::class, 'encerrar']);
 });
+
+Route::group(['prefix' => 'tipoTransacoes'], function () {
+});
