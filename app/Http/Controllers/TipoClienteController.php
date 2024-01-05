@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TipoClienteRequest;
 use App\Models\TipoCliente;
+use Exception;
 use Illuminate\Http\Request;
 
 class TipoClienteController extends Controller
@@ -24,18 +25,21 @@ class TipoClienteController extends Controller
 
     public function store(TipoClienteRequest $request)
     {
-        $tipoCliente = $this->tipoCliente->createTipoCliente($request->validated());
 
-        if (!empty($tipoCliente['error'])) {
+        try {
 
-            return response()->json([
+            $tipoCliente = $this->tipoCliente->createTipoCliente($request->validated());
+
+            return \response()->json([
                 $tipoCliente
-            ], 400);
+            ], 200);
+        } catch (Exception $e) {
+            return \response()->json([
+                'error' => true,
+                'msg' => $e->getMessage(),
+                'line' => $e->getLine()
+            ], 500);
         }
-
-        return \response()->json([
-            $tipoCliente
-        ], 200);
     }
 
     public function delete(TipoCliente $tipoCliente)
