@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContaController;
 use App\Http\Controllers\TipoClienteController;
 use App\Http\Controllers\TipoContaController;
 use App\Http\Controllers\userController;
@@ -42,4 +43,9 @@ Route::group(['prefix' => 'tipo-contas'], function () {
     route::get('/', [TipoContaController::class, 'index']);
     route::post('/', [TipoContaController::class, 'store']);
     route::delete('/{tipoConta}', [TipoContaController::class, 'delete']);
+});
+
+Route::group(['prefix' => 'contas'], function () {
+
+    route::post('/', [ContaController::class, 'store']);
 });

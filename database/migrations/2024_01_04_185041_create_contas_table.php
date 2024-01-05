@@ -20,8 +20,8 @@ class CreateContasTable extends Migration
             $table->integer('agencia');
             $table->integer('num_conta');
             $table->float('saldo_disponivel');
-            $table->timestamps('dt_abertura');
-            $table->timestamps('dt_encerramento');
+            $table->timestamp('dt_abertura')->nullable();
+            $table->timestamp('dt_encerramento')->nullable();
             $table->timestamps();
         });
     }
