@@ -15,6 +15,11 @@ class TipoTransacao extends Model
         'desc_transacao'
     ];
 
+    public function transacao()
+    {
+        return $this->belongsTo(Transacao::class, 'id', 'tipo_transacao_id');
+    }
+
     public function createTipoTransacao($request)
     {
         $tipoTransacao = new self;

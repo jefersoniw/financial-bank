@@ -31,6 +31,11 @@ class Conta extends Model
         return $this->hasOne(TipoConta::class, 'id', 'tipo_conta_id');
     }
 
+    public function transacao()
+    {
+        return $this->belongsTo(Transacao::class, 'id', 'tipo_transacao_id');
+    }
+
     public function createConta($request)
     {
 
@@ -53,6 +58,21 @@ class Conta extends Model
         $conta->dt_encerramento = date('Y-m-d H:i:s');
         if (!$conta->save()) {
             throw new Exception("Erro ao encerrar conta!");
+        }
+
+        return $conta;
+    }
+
+    public function depositar($request)
+    {
+        $conta = $this
+            ->where('agencia', $request['agencia'])
+            ->where('num_conta', $request['num_conta'])
+            ->first();
+
+        $conta->saldo_disponivel = $conta->saldo_disponivel + $request['valor_transacao'];
+        if (!$conta->save()) {
+            throw new Exception("Erro ao realizar um deposito na conta!");
         }
 
         return $conta;
