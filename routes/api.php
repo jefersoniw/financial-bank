@@ -48,5 +48,7 @@ Route::group(['prefix' => 'tipo-contas'], function () {
 
 Route::group(['prefix' => 'contas'], function () {
 
+    route::get('/', [ContaController::class, 'index']);
     route::post('/', [ContaController::class, 'store']);
+    route::put('/{conta}/encerrar', [ContaController::class, 'encerrar']);
 });

@@ -47,6 +47,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function conta()
+    {
+        return $this->belongsTo(Conta::class, 'id', 'user_id');
+    }
+
     public function createuser($request)
     {
         $user = new self;

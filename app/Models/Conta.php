@@ -5,6 +5,7 @@ namespace App\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Conta extends Model
 {
@@ -19,6 +20,16 @@ class Conta extends Model
         'dt_abertura',
         'dt_encerramento'
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function tipo_conta()
+    {
+        return $this->hasOne(TipoConta::class, 'id', 'tipo_conta_id');
+    }
 
     public function createConta($request)
     {
@@ -37,7 +48,13 @@ class Conta extends Model
         return $conta;
     }
 
-    public function editConta(Conta $conta, $request)
+    public function encerrarConta(Conta $conta)
     {
+        $conta->dt_encerramento = date('Y-m-d H:i:s');
+        if (!$conta->save()) {
+            throw new Exception("Erro ao encerrar conta!");
+        }
+
+        return $conta;
     }
 }

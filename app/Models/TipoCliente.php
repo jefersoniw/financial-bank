@@ -16,6 +16,11 @@ class TipoCliente extends Model
         'desc_tipo'
     ];
 
+    public function conta()
+    {
+        return $this->belongsTo(Conta::class, 'id', 'tipo_conta_id');
+    }
+
     public function createTipoCliente($request)
     {
         $tipoCliente = new self;
