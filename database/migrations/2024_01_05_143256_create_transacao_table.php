@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoTransacaosTable extends Migration
+class CreateTransacaoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateTipoTransacaosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_transacaos', function (Blueprint $table) {
+        Schema::create('transacao', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tipo_transacao_id')->constrained('tipo_transacao', 'id');
+            $table->float('valor_transacao');
+            $table->foreignId('conta_id')->constrained('contas', 'id');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateTipoTransacaosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_transacaos');
+        Schema::dropIfExists('transacao');
     }
 }

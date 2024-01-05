@@ -25,17 +25,17 @@
   -> dt_abertura
   -> dt_encerramento
 
--> tipo_transacao -> FAZENDO
+-> tipo_transacao -> FEITO
   -> id
   -> desc_transacao
 
--> transacao
+-> transacao -> FAZENDO
   -> id
-  -> tipo_transacao
+  -> tipo_transacao_id
   -> valor_transacao
   -> conta_id
 
--> historico
+-> historico -> FAZENDO
   -> id 
   -> user_id
   -> transacao_id 

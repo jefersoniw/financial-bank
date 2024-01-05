@@ -3,6 +3,8 @@
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\TipoClienteController;
 use App\Http\Controllers\TipoContaController;
+use App\Http\Controllers\TipoTransacaoController;
+use App\Http\Controllers\TransacaoController;
 use App\Http\Controllers\userController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -53,5 +55,16 @@ Route::group(['prefix' => 'contas'], function () {
     route::put('/{conta}/encerrar', [ContaController::class, 'encerrar']);
 });
 
-Route::group(['prefix' => 'tipoTransacoes'], function () {
+Route::group(['prefix' => 'tipo-transacoes'], function () {
+
+    route::get('/', [TipoTransacaoController::class, 'index']);
+    route::post('/', [TipoTransacaoController::class, 'store']);
+    route::delete('/{tipoTransacao}', [TipoTransacaoController::class, 'delete']);
+});
+
+Route::group(['prefix' => 'transacao'], function () {
+
+    route::get('/', [TransacaoController::class, 'index']);
+    route::post('/deposito', [TransacaoController::class, 'depositar']);
+    route::post('/saque', [TransacaoController::class, 'sacar']);
 });
