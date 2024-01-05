@@ -29,6 +29,7 @@ Route::group(['prefix' => 'users'], function () {
     route::post('/', [userController::class, 'store']);
     route::get('/{user}', [userController::class, 'show']);
     route::put('/{user}', [userController::class, 'update']);
+    route::put('/{user}/deactive', [userController::class, 'desativarUser']);
 });
 
 Route::group(['prefix' => 'tipo-clientes'], function () {
@@ -47,5 +48,10 @@ Route::group(['prefix' => 'tipo-contas'], function () {
 
 Route::group(['prefix' => 'contas'], function () {
 
+    route::get('/', [ContaController::class, 'index']);
     route::post('/', [ContaController::class, 'store']);
+    route::put('/{conta}/encerrar', [ContaController::class, 'encerrar']);
+});
+
+Route::group(['prefix' => 'tipoTransacoes'], function () {
 });

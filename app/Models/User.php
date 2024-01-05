@@ -47,62 +47,48 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function conta()
+    {
+        return $this->belongsTo(Conta::class, 'id', 'user_id');
+    }
+
     public function createuser($request)
     {
-        try {
-            $user = new self;
-            $user->name = $request['name'];
-            $user->cpfcnpj = $request['cpfcnpj'];
-            $user->tipo_cliente_id = $request['tipo_cliente'];
-            $user->email = $request['email'];
-            $user->password = Hash::make($request['password']);
-            if (!$user->save()) {
-                throw new Exception("erro ao salvar usuario!");
-            }
-
-            return [
-                'error' => false,
-                'msg' => 'User cadastrado com sucesso!',
-                $user
-            ];
-        } catch (Exception $e) {
-
-            return [
-                'error' => true,
-                'erro_msg' => $e->getMessage(),
-                'erro_line' => $e->getLine(),
-                'erro_file' => $e->getFile()
-            ];
+        $user = new self;
+        $user->name = $request['name'];
+        $user->cpfcnpj = $request['cpfcnpj'];
+        $user->tipo_cliente_id = $request['tipo_cliente'];
+        $user->email = $request['email'];
+        $user->password = Hash::make($request['password']);
+        if (!$user->save()) {
+            throw new Exception("erro ao salvar usuario!");
         }
+
+        return $user;
     }
 
     public function editUser(User $user, $request)
     {
-        try {
-            if (!empty($request['name'])) {
-                $user->name = $request['name'];
-            }
-            if (!empty($request['email'])) {
-                $user->email = $request['email'];
-            }
-            if (!empty($request['dt_encerramento'])) {
-                $user->dt_encerramento = $request['dt_encerramento'];
-            }
-            if (!$user->save()) {
-                throw new Exception("erro ao atualizar usuario!");
-            }
-
-            return [
-                'error' => false,
-                'msg' => 'Usuario atualizado com sucesso!',
-                $user
-            ];
-        } catch (Exception $e) {
-            return [
-                'error' => true,
-                'erro_msg' => $e->getMessage(),
-                'erro_line' => $e->getLine(),
-            ];
+        if (!empty($request['name'])) {
+            $user->name = $request['name'];
         }
+        if (!empty($request['email'])) {
+            $user->email = $request['email'];
+        }
+        if (!$user->save()) {
+            throw new Exception("erro ao atualizar usuario!");
+        }
+
+        return $user;
+    }
+
+    public function desativar(User $user)
+    {
+        $user->dt_encerramento = date('Y-m-d H:i:s');
+        if (!$user->save()) {
+            throw new Exception("erro ao desativar usuario!");
+        }
+
+        return $user;
     }
 }

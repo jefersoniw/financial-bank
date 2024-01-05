@@ -16,28 +16,19 @@ class TipoCliente extends Model
         'desc_tipo'
     ];
 
+    public function conta()
+    {
+        return $this->belongsTo(Conta::class, 'id', 'tipo_conta_id');
+    }
+
     public function createTipoCliente($request)
     {
-        try {
-
-            $tipoCliente = new self;
-            $tipoCliente->desc_tipo = $request['desc_tipo'];
-            if (!$tipoCliente->save()) {
-                throw new Exception("Erro ao salvar tipo cliente");
-            }
-
-            return [
-                'error' => false,
-                'msg' => 'Tipo de cliente salvo com sucesso!',
-                'dados' => $tipoCliente
-            ];
-        } catch (Exception $e) {
-            return [
-                'error' => true,
-                'msg' => $e->getMessage(),
-                'line' => $e->getLine(),
-                'file' => $e->getFile(),
-            ];
+        $tipoCliente = new self;
+        $tipoCliente->desc_tipo = $request['desc_tipo'];
+        if (!$tipoCliente->save()) {
+            throw new Exception("Erro ao salvar tipo cliente");
         }
+
+        return $tipoCliente;
     }
 }

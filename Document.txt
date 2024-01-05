@@ -15,7 +15,7 @@
   -> id
   -> desc_tipo
 
--> conta -> FAZENDO
+-> conta -> FEITO
   -> id
   -> user_id
   -> tipo_conta_id
@@ -25,7 +25,7 @@
   -> dt_abertura
   -> dt_encerramento
 
--> tipo_transacao
+-> tipo_transacao -> FAZENDO
   -> id
   -> desc_transacao
 
