@@ -17,9 +17,15 @@ class HistoricoController extends Controller
 
     public function index(User $user)
     {
-        dd($user);
         return \response()->json([
-            $this->historico
+            'total_transacoes' => $this->historico
+                ->with(
+                    'user',
+                    'transacao',
+                    'conta'
+                )
+                ->where('user_id', $user->id)->count(),
+            'histórico_transacoes' => $this->historico
                 ->with(
                     'user',
                     'transacao',

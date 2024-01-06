@@ -36,6 +36,11 @@ class Conta extends Model
         return $this->belongsTo(Transacao::class, 'id', 'tipo_transacao_id');
     }
 
+    public function historico()
+    {
+        return $this->belongsTo(Historico::class, 'id', 'conta_id');
+    }
+
     public function createConta($request)
     {
 

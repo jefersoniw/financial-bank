@@ -17,6 +17,21 @@ class Historico extends Model
         'saldo',
     ];
 
+    public function transacao()
+    {
+        return $this->hasOne(Transacao::class, 'id', 'transacao_id');
+    }
+
+    public function conta()
+    {
+        return $this->hasOne(Conta::class, 'id', 'conta_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
     public function createHistorico(User $user, Transacao $transacao, Conta $conta)
     {
         $historico = new self;
