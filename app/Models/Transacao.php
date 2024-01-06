@@ -26,6 +26,11 @@ class Transacao extends Model
         return $this->hasOne(Conta::class, 'id', 'conta_id');
     }
 
+    public function historico()
+    {
+        return $this->belongsTo(Historico::class, 'id', 'transacao_id');
+    }
+
     public function createTransacao($request, Conta $conta)
     {
         $transacao = new self;

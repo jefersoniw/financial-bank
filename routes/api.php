@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContaController;
+use App\Http\Controllers\HistoricoController;
 use App\Http\Controllers\TipoClienteController;
 use App\Http\Controllers\TipoContaController;
 use App\Http\Controllers\TipoTransacaoController;
@@ -67,4 +68,9 @@ Route::group(['prefix' => 'transacao'], function () {
     route::get('/', [TransacaoController::class, 'index']);
     route::post('/deposito', [TransacaoController::class, 'depositar']);
     route::post('/saque', [TransacaoController::class, 'sacar']);
+});
+
+Route::group(['prefix' => 'historico'], function () {
+
+    route::get('/{user}', [HistoricoController::class, 'index']);
 });

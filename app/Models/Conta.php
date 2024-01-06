@@ -36,6 +36,11 @@ class Conta extends Model
         return $this->belongsTo(Transacao::class, 'id', 'tipo_transacao_id');
     }
 
+    public function historico()
+    {
+        return $this->belongsTo(Historico::class, 'id', 'conta_id');
+    }
+
     public function createConta($request)
     {
 
@@ -63,16 +68,21 @@ class Conta extends Model
         return $conta;
     }
 
-    public function depositar($request)
+    public function depositar($request, Conta $conta)
     {
-        $conta = $this
-            ->where('agencia', $request['agencia'])
-            ->where('num_conta', $request['num_conta'])
-            ->first();
-
         $conta->saldo_disponivel = $conta->saldo_disponivel + $request['valor_transacao'];
         if (!$conta->save()) {
             throw new Exception("Erro ao realizar um deposito na conta!");
+        }
+
+        return $conta;
+    }
+
+    public function sacar($request, Conta $conta)
+    {
+        $conta->saldo_disponivel = $conta->saldo_disponivel - $request['valor_transacao'];
+        if (!$conta->save()) {
+            throw new Exception("Erro ao realizar um saque na conta!");
         }
 
         return $conta;

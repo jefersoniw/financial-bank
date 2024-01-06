@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->belongsTo(Conta::class, 'id', 'user_id');
     }
 
+    public function historico()
+    {
+        return $this->belongsTo(Historico::class, 'id', 'user_id');
+    }
+
     public function createuser($request)
     {
         $user = new self;
