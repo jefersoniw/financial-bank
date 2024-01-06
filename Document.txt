@@ -29,13 +29,13 @@
   -> id
   -> desc_transacao
 
--> transacao -> FAZENDO
+-> transacao -> FEITO
   -> id
   -> tipo_transacao_id
   -> valor_transacao
   -> conta_id
 
--> historico -> FAZENDO
+-> historico -> FEITO
   -> id 
   -> user_id
   -> transacao_id 
