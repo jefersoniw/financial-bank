@@ -72,5 +72,5 @@ Route::group(['prefix' => 'transacao'], function () {
 
 Route::group(['prefix' => 'historico'], function () {
 
-    route::get('/', [HistoricoController::class, 'index']);
+    route::get('/{user}', [HistoricoController::class, 'index']);
 });

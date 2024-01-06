@@ -48,8 +48,44 @@ class TransacaoController extends Controller
     {
         DB::beginTransaction();
         try {
+            $transacaoSaque = $this
+                ->tipoTransacao
+                ->where('id', 1)
+                ->first();
 
-            // DB::commit();
+            $dados = [
+                'valor_transacao' => $request->valor_transacao,
+                'tipo_transacao_id' => $transacaoSaque->id
+            ];
+
+            $verificaConta = $this->conta
+                ->where('agencia', $request['agencia'])
+                ->where('num_conta', $request['num_conta'])
+                ->first();
+
+            if ($verificaConta->saldo_disponivel < $dados['valor_transacao']) {
+
+                return \response()->json([
+                    'error' => true,
+                    'msg' => 'Saldo insuficiente para ocorrer a transação!'
+                ], 200);
+            }
+
+            $conta = $this->conta->sacar($dados, $verificaConta);
+
+            $transacao = $this->transacao->createTransacao($dados, $conta);
+
+            $user = $this->user->find($conta->user_id);
+
+            $this->historico->createHistorico($user, $transacao, $conta);
+
+            DB::commit();
+
+            return response()->json([
+                'msg' => 'Saque realizado com sucesso!',
+                'saldo_disponivel' => $conta->saldo_disponivel,
+                'dados' => $this->transacao->with('conta', 'tipo_transacao')->get(),
+            ], 200);
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -77,7 +113,12 @@ class TransacaoController extends Controller
                 'tipo_transacao_id' => $transacaoDeposito->id
             ];
 
-            $conta = $this->conta->depositar($request->validated());
+            $verificaConta = $this->conta
+                ->where('agencia', $request['agencia'])
+                ->where('num_conta', $request['num_conta'])
+                ->first();
+
+            $conta = $this->conta->depositar($dados, $verificaConta);
 
             $transacao = $this->transacao->createTransacao($dados, $conta);
 
