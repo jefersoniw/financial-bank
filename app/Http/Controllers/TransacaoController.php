@@ -12,6 +12,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class TransacaoController extends Controller
 {
@@ -81,10 +82,23 @@ class TransacaoController extends Controller
 
             DB::commit();
 
-            return response()->json([
+            $retorno = [
                 'msg' => 'Saque realizado com sucesso!',
                 'saldo_disponivel' => $conta->saldo_disponivel,
-                'dados' => $this->transacao->with('conta', 'tipo_transacao')->get(),
+                'transacao' => $transacao,
+                'conta' => $transacao->conta,
+                'tipo_transacao' => $transacao->tipo_transacao,
+            ];
+
+            $response = Http::withOptions([
+                'verify' => false
+            ])->post('http://localhost:8001/api/envio-email', [
+                'retorno' => $retorno
+            ]);
+
+            return \response()->json([
+                $retorno,
+                $response
             ], 200);
         } catch (Exception $e) {
             DB::rollBack();
@@ -128,10 +142,23 @@ class TransacaoController extends Controller
 
             DB::commit();
 
-            return response()->json([
+            $retorno = [
                 'msg' => 'Depósito realizado com sucesso!',
                 'saldo_disponivel' => $conta->saldo_disponivel,
-                'dados' => $this->transacao->with('conta', 'tipo_transacao')->get(),
+                'transacao' => $transacao,
+                'conta' => $transacao->conta,
+                'tipo_transacao' => $transacao->tipo_transacao,
+            ];
+
+            $response = Http::withOptions([
+                'verify' => false
+            ])->post('http://localhost:8001/api/envio-email', [
+                'retorno' => $retorno
+            ]);
+
+            return \response()->json([
+                $retorno,
+                $response
             ], 200);
         } catch (Exception $e) {
             DB::rollBack();
